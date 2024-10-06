@@ -1,0 +1,22 @@
+{
+    "name": "kel/gamenews",
+    "description": "API Rest PHP site jogos",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Kel\\Gamenews\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kelson Leandro",
+            "email": "kelsonlean@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload" : {
+        "psr-4" : {
+            "App\\" : "App/"
+        }
+    }
+}
