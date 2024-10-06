@@ -12,9 +12,11 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 $controller = null;
 $id = null; //param
-$data = null;
 $method = $_SERVER["REQUEST_METHOD"]; //POST, PUT, DELETE and GET
 $uri = $_SERVER["REQUEST_URI"];
+$data = null;
+parse_str(file_get_contents('php://input'), $data); //parse_str é pra transofmrar em array
+
 $unsetCount = 4;
 
 //TRATA A URI
@@ -34,9 +36,46 @@ if(isset($ex[1])) {
 	$id = $ex[1];
 }
 
-var_dump($ex);
+//FIM TRATA A URI
 
-parse_str(file_get_contents('php://input'), $data); //parse_str é pra transofmrar em array
-echo json_encode(["controller"=>$controller, "id"=>$id]);
+switch ($method) {
+	case 'GET':
+		if ($controller != null && $id == null) {
+			echo (new \App\Controller\GameController()) -> readAll();
+		}elseif($controller != null && $id != null) {
+			echo (new \App\Controller\GameController()) -> readById($id);
+		}else {
+			echo json_encode(["result" => "invalid"]); //poderia tbm ser só "echo json_encode(array("", ""));"
+		}
+		break;
+	case 'POST':
+		if ($controller != null && $id == null) {
+			echo (new \App\Controller\GameController()) -> create($data);
+		}else {
+			echo json_encode(["result" => "invalid"]);
+		}
+		break;
+	case 'PUT':
+		if ($controller != null && $id != null) {
+			echo (new \App\Controller\GameController()) -> update($id, $data);
+		}else {
+			echo json_encode(["result" => "invalid"]);
+		}
+		break;
+	case 'DELETE':
+		if ($controller != null && $id != null) {
+			echo (new \App\Controller\GameController()) -> delete($id);
+		}else {
+			echo json_encode(["result" => "invalid"]);
+		}
+		break;
+	
+	default:
+		echo json_encode(["result" => "invalid request"]);
+		break;
+}
+//var_dump($ex);
+
+//echo json_encode(["controller"=>$controller, "id"=>$id]);
 
  ?>
