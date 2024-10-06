@@ -14,7 +14,9 @@ $controller = null;
 $id = null; //param
 $data = null;
 $method = $_SERVER["REQUEST_METHOD"]; //POST, PUT, DELETE and GET
+$uri = $_SERVER["REQUEST_URI"];
 
-echo json_encode(["tipo"=>$method]);
+parse_str(file_get_contents('php://input'), $data); //parse_str é pra transofmrar em array
+echo json_encode(["tipo"=>$method, "data"=>$data, "uri"=>$uri]);
 
  ?>
