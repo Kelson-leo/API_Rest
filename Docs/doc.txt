@@ -10,3 +10,12 @@ id = numero && > 0
 titulo = > 3 && < 100
 descricao = >= 10 && <= 250
 videoid = != "" && <=15
+
+
+=============Endpoint //é a url que chama passando as informações
+
+GET = /game 		| Retorna todos
+GET = /game/:id 	| Retorna game pelo ID
+POST = /game 		| Criar um novo game
+PUT = /game/:id 	| Altera um game
+DELETE 	= /game/:id | Deleta um game 
