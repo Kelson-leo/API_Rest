@@ -25,15 +25,32 @@ class Game
 	}
 
 	public function setTitulo($titulo){
-		$this->id=$id;
+		$this->titulo=$titulo;
 	}
 
 	public function setDescricao($descricao) {
-		$this->id=$id;
+		$this->descricao=$descricao;
 	}
 
 	public function setVideoId($videoid) {
 		$this->videoid=$videoid;
+	}
+
+	//Getter
+	public function getId(){
+		return $this->id;
+	}
+
+	public function getTitulo(){
+		return $this->titulo;
+	}
+
+	public function getDescricao(){
+		return $this->descricao;
+	}
+
+	public function getVideoid(){
+		return $this->videoid;
 	}
 }
 
