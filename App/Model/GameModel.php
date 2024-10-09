@@ -2,6 +2,7 @@
 
 namespace App\Model;
 use App\Entity\Game;
+use App\Util\Serialize;
 
 class GameModel 
 {
@@ -11,7 +12,13 @@ class GameModel
 	public function __construct()
 	{
 		$this->fileName = "../database/carro.db";
+		$this->load();
 	}
+
+	public function readAll(){
+		return (new Serialize())->serialize($this->listGame);
+	}
+
 
 	public function create(Game $game) {
 		$this->listGame[] = $game;
@@ -22,12 +29,12 @@ class GameModel
 	private function save() {
 		$temp = [];
 
-		foreach ($this->$listGame as $g) {
+		foreach ($this->listGame as $g) {
 			$temp [] = [
 				"id" => $g->getId(),
 				"titulo"=> $g->getTitulo(),
-				"descricao" => getDescricao(),
-				"videoid" => getVideoid()
+				"descricao" =>$g-> getDescricao(),
+				"videoid" =>$g-> getVideoid()
 			];
 			
 			$fp = fopen($this->fileName, "w"); //faz escrita no banco/"arquivo"(database/carro.db)
@@ -37,10 +44,27 @@ class GameModel
 		}
 	}
 
+	//Internal method
 	private function load() {
+		if(!file_exists($this->fileName) || filesize($this->fileName) <= 0)
+			return [];
 
+		$fp = fopen($this->fileName, "r");
+		$str = fread($fp, filesize($this->fileName));
+		fclose($fp);
+
+		$arrayGame = json_decode($str);
+
+		foreach($arrayGame as $g){
+			$this->listGame[] = new Game(
+				$g->id,
+				$g->titulo,
+				$g->descricao,
+				$g->videoid
+			);
+		}
 	}
 }
 
 
- ?>
+?>

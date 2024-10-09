@@ -20,10 +20,10 @@ class GameController
 		$result = $this->validate($game);
 
 		if($result != "") {
-			echo json_encode(["result"=> $result]);
+			return json_encode(["result"=> $result]);
 		}
 
-		$this->gameModel->create($game);
+		return json_encode($this->gameModel->create($game));
 	}
 
 	//PUT - Altera um game
@@ -34,10 +34,10 @@ class GameController
 		$result = $this->validate($game, true);
 
 		if($result != "") {
-			echo json_encode(["result"=> $result]);
+			return json_encode(["result"=> $result]);
 		}
 		
-		return json_encode(["name" => "update"]);
+		//return json_encode(["name" => "update"]);
 	}
 
 	//DELETE - Remove um game
@@ -55,7 +55,7 @@ class GameController
 	//GET - Retorna todos os games
 	function readAll() //getAll
 	{
-		return json_encode(["name" => "readAll"]);
+		return $this->gameModel->readAll();
 	}
 
 	private function convertType($data) {
