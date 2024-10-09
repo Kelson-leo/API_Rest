@@ -37,7 +37,7 @@ class GameController
 			return json_encode(["result"=> $result]);
 		}
 		
-		//return json_encode(["name" => "update"]);
+		return  json_encode(["result" => $this->gameModel->update($game)]);
 	}
 
 	//DELETE - Remove um game
