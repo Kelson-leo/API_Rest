@@ -6,7 +6,7 @@ use ReflectionClass;
 /*
 https://github.com/victortassinari/PhpClassSerialization/blob/master/ClassSerialization.php
 */
-class Serialize {
+class Serialize { //converte pra array e serializa pra poder acessar
     private static function objToArray($obj) {
         $reflectionClass = new ReflectionClass($obj);
         $methods = $reflectionClass->getMethods();

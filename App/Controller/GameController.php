@@ -47,9 +47,13 @@ class GameController
 	}
 
 	//GET - Retorna um game pelo ID
-	function readById($id = 0) //getById
-	{
-		return json_encode(["name" => "readById - {$id}"]);
+	function readById($id = 0){
+		$id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+
+		if($id <= 0)
+			return json_encode(["result" => "invalid id"]);
+
+		return $this->gameModel->readById($id);
 	}
 
 	//GET - Retorna todos os games
@@ -58,13 +62,13 @@ class GameController
 		return $this->gameModel->readAll();
 	}
 
-	private function convertType($data) {
+	private function convertType($data){
 		return new Game(
 			null,
-			(isset($data['titulo']) ? $data['titulo'] : null),
-			(isset($data['descricao']) ? $data['descricao'] : null),
-			(isset($data['videoid']) ? $data['videoid'] : null)
-			 //o "ID" vem por parâmtro, e o "data" vem via POST, PUT etc. por isso não é especificado aqui
+			(isset($data['titulo']) ? filter_var($data['titulo'], FILTER_SANITIZE_STRING) : null),
+			(isset($data['descricao']) ? filter_var($data['descricao'], FILTER_SANITIZE_STRING) : null),
+			(isset($data['videoid']) ? filter_var($data['videoid'], FILTER_SANITIZE_STRING) : null)
+      		//o "ID" vem por parâmtro, e o "data" vem via POST, PUT etc. por isso não é especificado aqui
 		);
 	}
 
@@ -85,5 +89,5 @@ class GameController
 	}
 }
 
- ?>
+?>
 
