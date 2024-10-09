@@ -41,9 +41,15 @@ class GameController
 	}
 
 	//DELETE - Remove um game
-	function delete($id = 0) //getById
-	{
-		return json_encode(["name" => "delete - {$id}"]);
+	function delete($id = 0){
+		$id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+
+		if($id <= 0)
+			return json_encode(["result" => "invalid id"]);
+
+		$result =  $this->gameModel->delete($id);
+
+		return  json_encode(["result" => $result]);
 	}
 
 	//GET - Retorna um game pelo ID

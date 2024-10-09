@@ -38,6 +38,21 @@ class GameModel
 		return "Okay";
 	}
 
+	public function delete($id){
+		$result = "not found";
+		for($i = 0; $i < count($this->listGame); $i++){
+			if($this->listGame[$i]->getId() == $id){
+				unset($this->listGame[$i]);
+				$result = "ok";
+			}
+		}
+
+		$this->listGame = array_filter(array_values($this->listGame));
+
+		$this->save();
+		return $result;
+	}
+	
 	//Internal method
 
 	private function save() {
